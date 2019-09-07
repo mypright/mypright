@@ -39,4 +39,12 @@ public class SiteRequestController {
     return new ResponseEntity<>("Failed to create uniqueId", HttpStatus.BAD_REQUEST);
   }
 
+  @RequestMapping(
+            value = "/**",
+            method = RequestMethod.OPTIONS
+    )
+  public ResponseEntity handle() {
+      return new ResponseEntity(HttpStatus.OK);
+  }
+
 }
