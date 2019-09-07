@@ -28,7 +28,8 @@ public class SiteRequestController {
       object = new JSONObject(siteRequest.toString());
       if (!object.get("siteUrl").toString().isEmpty()) {
         String uniqueSiteId = siteRequestService.generateUniqueSiteID();
-        return new ResponseEntity<>(uniqueSiteId, HttpStatus.OK);
+        String responseBody = String.format("{\"uniqueSiteId\":%s}",uniqueSiteId);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
       }
     } catch (JSONException e) {
       log.error("Could not parse the request" + e);
