@@ -4,6 +4,8 @@ import com.mypright.mypright.model.SiteRequest;
 import com.mypright.mypright.model.SiteRequestHook;
 import com.mypright.mypright.service.SiteRequestService;
 import com.mypright.mypright.state.ApplicationState;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,13 @@ public class SiteRequestController {
       }
     }
     return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+  }
+
+  @GetMapping(value = "/data/all")
+  public ResponseEntity<List<SiteRequestHook>> sendAllUserData(){
+    List<SiteRequestHook> siteRequestHooks = new ArrayList<>();
+    siteRequestHooks.addAll(ApplicationState.getINSTANCE().getSiteRequestHooks());
+    return new ResponseEntity<>(siteRequestHooks,HttpStatus.OK);
   }
 
   @RequestMapping(
