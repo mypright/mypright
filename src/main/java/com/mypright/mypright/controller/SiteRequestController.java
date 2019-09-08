@@ -4,7 +4,6 @@ import com.mypright.mypright.model.SiteRequest;
 import com.mypright.mypright.model.SiteRequestHook;
 import com.mypright.mypright.service.SiteRequestService;
 import com.mypright.mypright.state.ApplicationState;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
