@@ -13,12 +13,15 @@ public class SiteRequestHook {
 
   private String uniqueId;
 
+  private boolean isApproved;
+
   private SiteRequest siteRequest;
 
   @Override
   public String toString() {
     return "{" +
-        "uniqueSiteId:'" + uniqueId + '\'' +
+        "uniqueId:'" + uniqueId + '\'' +
+        ", isApproved:" + isApproved +
         ", siteRequest:" + siteRequest +
         '}';
   }

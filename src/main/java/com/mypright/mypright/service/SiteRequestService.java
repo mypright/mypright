@@ -3,6 +3,8 @@ package com.mypright.mypright.service;
 import com.mypright.mypright.model.SiteRequest;
 import com.mypright.mypright.model.SiteRequestHook;
 import com.mypright.mypright.state.ApplicationState;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,8 +15,14 @@ public class SiteRequestService {
   }
 
   public SiteRequestHook createSiteRequestHook(SiteRequest siteRequest, String uniqueId) {
-    SiteRequestHook siteRequestHook = new SiteRequestHook(uniqueId,siteRequest);
+    SiteRequestHook siteRequestHook = new SiteRequestHook(uniqueId,false,siteRequest);
     ApplicationState.getINSTANCE().getSiteRequestHooks().add(siteRequestHook);
     return siteRequestHook;
+  }
+
+  public List<SiteRequestHook> getAllSiteRequestHooks() {
+    List<SiteRequestHook> siteRequestHooks = new ArrayList<>();
+    siteRequestHooks.addAll(ApplicationState.getINSTANCE().getSiteRequestHooks());
+    return siteRequestHooks;
   }
 }

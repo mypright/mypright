@@ -52,8 +52,7 @@ public class SiteRequestController {
   public ResponseEntity<SiteRequestHook> sendSiteRequestHook(@RequestParam("uniqueSiteId") String uniqueSiteId) {
     for (SiteRequestHook siteRequestHook : ApplicationState.getINSTANCE().getSiteRequestHooks()) {
       if (siteRequestHook.getUniqueId().equals(uniqueSiteId)) {
-        SiteRequestHook siteRequestHook1 = ApplicationState.getINSTANCE().getGrantedUserDetailsFor(siteRequestHook);
-        return new ResponseEntity<>(siteRequestHook1, HttpStatus.OK);
+        return new ResponseEntity<>(siteRequestHook, HttpStatus.OK);
       }
     }
     return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -61,8 +60,7 @@ public class SiteRequestController {
 
   @GetMapping(value = "/data/all")
   public ResponseEntity<List<SiteRequestHook>> sendAllUserData(){
-    List<SiteRequestHook> siteRequestHooks = new ArrayList<>();
-    siteRequestHooks.addAll(ApplicationState.getINSTANCE().getSiteRequestHooks());
+    List<SiteRequestHook> siteRequestHooks = siteRequestService.getAllSiteRequestHooks();
     return new ResponseEntity<>(siteRequestHooks,HttpStatus.OK);
   }
 
