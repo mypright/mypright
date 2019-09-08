@@ -2,9 +2,9 @@ package com.mypright.mypright.controller;
 
 import com.mypright.mypright.model.SiteRequest;
 import com.mypright.mypright.model.SiteRequestHook;
+import com.mypright.mypright.model.UserDetail;
 import com.mypright.mypright.service.SiteRequestService;
 import com.mypright.mypright.state.ApplicationState;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -49,7 +49,8 @@ public class SiteRequestController {
   }
 
   @GetMapping(value = "/data")
-  public ResponseEntity<SiteRequestHook> sendSiteRequestHook(@RequestParam("uniqueSiteId") String uniqueSiteId) {
+  public ResponseEntity<SiteRequestHook> sendSiteRequestHook(
+      @RequestParam("uniqueSiteId") String uniqueSiteId) {
     for (SiteRequestHook siteRequestHook : ApplicationState.getINSTANCE().getSiteRequestHooks()) {
       if (siteRequestHook.getUniqueId().equals(uniqueSiteId)) {
         return new ResponseEntity<>(siteRequestHook, HttpStatus.OK);
@@ -59,17 +60,49 @@ public class SiteRequestController {
   }
 
   @GetMapping(value = "/data/all")
-  public ResponseEntity<List<SiteRequestHook>> sendAllUserData(){
+  public ResponseEntity<List<SiteRequestHook>> sendAllUserData() {
     List<SiteRequestHook> siteRequestHooks = siteRequestService.getAllSiteRequestHooks();
-    return new ResponseEntity<>(siteRequestHooks,HttpStatus.OK);
+    return new ResponseEntity<>(siteRequestHooks, HttpStatus.OK);
+  }
+
+  @PostMapping(value = "/approve")
+  public HttpStatus approveSite(@RequestBody String responseBody) {
+    JSONObject responseJson;
+    String uniqueSiteId;
+    try {
+      responseJson = new JSONObject(responseBody);
+      uniqueSiteId = responseJson.get("uniqueSiteId").toString();
+
+      for (SiteRequestHook siteRequestHook : ApplicationState.getINSTANCE().getSiteRequestHooks()) {
+        if (siteRequestHook.getUniqueId().equals(uniqueSiteId)) {
+          siteRequestHook.setApproved(responseJson.getBoolean("approved"));
+          return HttpStatus.OK;
+        }
+      }
+    } catch (Exception e) {
+      log.error("Could not parse the request" + e);
+    }
+    return HttpStatus.NO_CONTENT;
+  }
+
+  @GetMapping(value = "/user/details")
+  public ResponseEntity<List<UserDetail>> getUserDetailsFor(
+      @RequestParam("uniqueSiteId") String uniqueSiteId) {
+    List<UserDetail> userDetailsList = ApplicationState.getINSTANCE().getUserDetails();
+    for (SiteRequestHook siteRequestHook : ApplicationState.getINSTANCE().getSiteRequestHooks()) {
+      if (siteRequestHook.getUniqueId().equals(uniqueSiteId) && siteRequestHook.isApproved()) {
+        return new ResponseEntity<>(userDetailsList, HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
   }
 
   @RequestMapping(
-            value = "/request",
-            method = RequestMethod.OPTIONS
-    )
+      value = "/request",
+      method = RequestMethod.OPTIONS
+  )
   public ResponseEntity handle() {
-      return new ResponseEntity(HttpStatus.OK);
+    return new ResponseEntity(HttpStatus.OK);
   }
 
 }
