@@ -56,7 +56,12 @@ public class SiteRequestController {
         return new ResponseEntity<>(siteRequestHook, HttpStatus.OK);
       }
     }
-    return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+//    SiteRequestHook syncedData = siteRequestService.fetchPortalDetails(uniqueSiteId);
+//    if(syncedData != null) {
+//      return new ResponseEntity<>(syncedData, HttpStatus.OK);
+//    }
+
+    return new ResponseEntity<>((SiteRequestHook) null, HttpStatus.NO_CONTENT);
   }
 
   @GetMapping(value = "/data/all")
@@ -94,11 +99,11 @@ public class SiteRequestController {
         return new ResponseEntity<>(userDetailsList, HttpStatus.OK);
       }
     }
-    return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
+    return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
   }
 
   @RequestMapping(
-      value = "/request",
+      value = "/*/**",
       method = RequestMethod.OPTIONS
   )
   public ResponseEntity handle() {
