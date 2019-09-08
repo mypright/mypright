@@ -1,14 +1,16 @@
 package com.mypright.mypright.controller;
 
 import com.mypright.mypright.model.SiteRequest;
+import com.mypright.mypright.model.SiteRequestHook;
 import com.mypright.mypright.service.SiteRequestService;
+import com.mypright.mypright.state.ApplicationState;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,18 +28,40 @@ public class SiteRequestController {
 
   @PostMapping(value = "/request")
   public ResponseEntity<String> generateUniqueId(@RequestBody SiteRequest siteRequest) {
-    JSONObject object;
+    JSONObject siteRequestJson;
     try {
-      object = new JSONObject(siteRequest.toString());
-      if (!object.get("siteUrl").toString().isEmpty()) {
+      siteRequestJson = new JSONObject(siteRequest.toString());
+
+      if (!siteRequestJson.get("siteUrl").toString().isEmpty()) {
         String uniqueSiteId = siteRequestService.generateUniqueSiteID();
-        String responseBody = String.format("{\"uniqueSiteId\":%s}",uniqueSiteId);
+
+        siteRequestService.createSiteRequestHook(siteRequest, uniqueSiteId);
+        String responseBody = String.format("{\"uniqueSiteId\":%s}", uniqueSiteId);
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
       }
-    } catch (JSONException e) {
+    } catch (Exception e) {
       log.error("Could not parse the request" + e);
     }
-    return new ResponseEntity<>("Failed to create uniqueId", HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>("Failed to create uniqueSiteId", HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = "/data")
+  public ResponseEntity<SiteRequestHook> sendSiteRequestHook(@RequestBody String uniqueId) {
+    String requestedUniqueId = "";
+    JSONObject uniqueIdJson = null;
+    try {
+      uniqueIdJson = new JSONObject(uniqueId);
+      requestedUniqueId = uniqueIdJson.get("uniqueSiteId").toString();
+    } catch (Exception e) {
+      log.error("Could not parse the request" + e);
+    }
+    for (SiteRequestHook siteRequestHook : ApplicationState.getINSTANCE().getSiteRequestHooks()) {
+      if (siteRequestHook.getUniqueId().equals(requestedUniqueId)) {
+        SiteRequestHook siteRequestHook1 = ApplicationState.getINSTANCE().getGrantedUserDetailsFor(siteRequestHook);
+        return new ResponseEntity<>(siteRequestHook1, HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
   }
 
   @RequestMapping(
