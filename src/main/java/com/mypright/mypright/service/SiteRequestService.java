@@ -46,7 +46,7 @@ public class SiteRequestService {
       return null;
     }
     try {
-      URI uri = new URI("" + uniqueSiteId);
+      URI uri = new URI("https://myprightservice.herokuapp.com/site/data?uniqueSiteId=" + uniqueSiteId);
       SiteRequestHook siteRequestHook =
               restTemplate.exchange(
                       uri,
