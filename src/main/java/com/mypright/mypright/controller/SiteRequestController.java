@@ -55,7 +55,7 @@ public class SiteRequestController {
         return new ResponseEntity<>(siteRequestHook, HttpStatus.OK);
       }
     }
-    return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    return new ResponseEntity<>((SiteRequestHook) null, HttpStatus.NO_CONTENT);
   }
 
   @GetMapping(value = "/data/all")
