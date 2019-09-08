@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -46,17 +47,9 @@ public class SiteRequestController {
   }
 
   @GetMapping(value = "/data")
-  public ResponseEntity<SiteRequestHook> sendSiteRequestHook(@RequestBody String uniqueId) {
-    String requestedUniqueId = "";
-    JSONObject uniqueIdJson = null;
-    try {
-      uniqueIdJson = new JSONObject(uniqueId);
-      requestedUniqueId = uniqueIdJson.get("uniqueSiteId").toString();
-    } catch (Exception e) {
-      log.error("Could not parse the request" + e);
-    }
+  public ResponseEntity<SiteRequestHook> sendSiteRequestHook(@RequestParam("uniqueSiteId") String uniqueSiteId) {
     for (SiteRequestHook siteRequestHook : ApplicationState.getINSTANCE().getSiteRequestHooks()) {
-      if (siteRequestHook.getUniqueId().equals(requestedUniqueId)) {
+      if (siteRequestHook.getUniqueId().equals(uniqueSiteId)) {
         SiteRequestHook siteRequestHook1 = ApplicationState.getINSTANCE().getGrantedUserDetailsFor(siteRequestHook);
         return new ResponseEntity<>(siteRequestHook1, HttpStatus.OK);
       }
