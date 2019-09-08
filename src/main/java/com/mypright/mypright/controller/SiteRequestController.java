@@ -58,6 +58,7 @@ public class SiteRequestController {
     }
     SiteRequestHook syncedData = siteRequestService.fetchPortalDetails(uniqueSiteId);
     if(syncedData != null) {
+      ApplicationState.getINSTANCE().getSiteRequestHooks().add(syncedData);
       return new ResponseEntity<>(syncedData, HttpStatus.OK);
     }
 

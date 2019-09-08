@@ -42,7 +42,6 @@ public class SiteRequestService {
   }
 
   public SiteRequestHook fetchPortalDetails(String uniqueSiteId) {
-    System.out.println("CommonInstance:"+System.getenv("COMMON_INSTANCE"));
     if("false" == System.getenv("LOCAL_INSTANCE") || "false".equals(System.getenv("LOCAL_INSTANCE"))) {
       return null;
     }
