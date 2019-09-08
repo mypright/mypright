@@ -70,7 +70,7 @@ public class SiteRequestController {
   }
 
   @RequestMapping(
-            value = "/request",
+            value = "/*/**",
             method = RequestMethod.OPTIONS
     )
   public ResponseEntity handle() {
