@@ -42,7 +42,7 @@ public class SiteRequestService {
   }
 
   public SiteRequestHook fetchPortalDetails(String uniqueSiteId) {
-    if("true".equals(System.getenv("CENTRAL_INSTANCE"))) {
+    if("true" != System.getenv("LOCAL_INSTANCE")) {
       return null;
     }
     try {
