@@ -40,24 +40,25 @@ public class SiteRequestService {
     siteRequestHooks.addAll(ApplicationState.getINSTANCE().getSiteRequestHooks());
     return siteRequestHooks;
   }
-//
-//  public SiteRequestHook fetchPortalDetails(String uniqueSiteId) {
-//    if("true" != System.getenv("LOCAL_INSTANCE")) {
-//      return null;
-//    }
-//    try {
-//      URI uri = new URI("https://myprightservice.herokuapp.com/site/data?uniqueSiteId=" + uniqueSiteId);
-//      SiteRequestHook siteRequestHook =
-//              restTemplate.exchange(
-//                      uri,
-//                      HttpMethod.GET,
-//                      new HttpEntity<>(new LinkedMultiValueMap<String, String>(), new HttpHeaders()),
-//                      SiteRequestHook.class)
-//                      .getBody();
-//      return siteRequestHook;
-//    } catch (Exception exception) {
-//      System.out.println("Exception with uniqueId:");
-//      return null;
-//    }
-//  }
+
+  public SiteRequestHook fetchPortalDetails(String uniqueSiteId) {
+    System.out.println("CommonInstance:"+System.getenv("COMMON_INSTANCE"));
+    if("false" == System.getenv("LOCAL_INSTANCE")) {
+      return null;
+    }
+    try {
+      URI uri = new URI("https://myprightservice.herokuapp.com/site/data?uniqueSiteId=" + uniqueSiteId);
+      SiteRequestHook siteRequestHook =
+              restTemplate.exchange(
+                      uri,
+                      HttpMethod.GET,
+                      new HttpEntity<>(new LinkedMultiValueMap<String, String>(), new HttpHeaders()),
+                      SiteRequestHook.class)
+                      .getBody();
+      return siteRequestHook;
+    } catch (Exception exception) {
+      System.out.println("Exception with uniqueId:");
+      return null;
+    }
+  }
 }

@@ -56,10 +56,10 @@ public class SiteRequestController {
         return new ResponseEntity<>(siteRequestHook, HttpStatus.OK);
       }
     }
-//    SiteRequestHook syncedData = siteRequestService.fetchPortalDetails(uniqueSiteId);
-//    if(syncedData != null) {
-//      return new ResponseEntity<>(syncedData, HttpStatus.OK);
-//    }
+    SiteRequestHook syncedData = siteRequestService.fetchPortalDetails(uniqueSiteId);
+    if(syncedData != null) {
+      return new ResponseEntity<>(syncedData, HttpStatus.OK);
+    }
 
     return new ResponseEntity<>((SiteRequestHook) null, HttpStatus.NO_CONTENT);
   }
