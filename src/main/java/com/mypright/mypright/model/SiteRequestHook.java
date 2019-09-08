@@ -9,20 +9,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDetail {
+public class SiteRequestHook {
 
-  private String detailName;
+  private String uniqueId;
 
-  private boolean isRequired;
-
-  private String reason;
+  private SiteRequest siteRequest;
 
   @Override
   public String toString() {
     return "{" +
-        "detailName='" + detailName + '\'' +
-        ", isRequired=" + isRequired +
-        ", reason='" + reason + '\'' +
+        "uniqueId:'" + uniqueId + '\'' +
+        ", siteRequest:" + siteRequest +
         '}';
   }
 }
