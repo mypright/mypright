@@ -32,3 +32,6 @@ target/
 
 # ignore files
 .DS_Store
+
+# IDE
+mypright.iml

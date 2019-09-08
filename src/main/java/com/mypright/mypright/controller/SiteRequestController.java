@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,9 +24,9 @@ public class SiteRequestController {
   @Autowired
   private SiteRequestService siteRequestService;
 
-  @RequestMapping(value = "/request", method = RequestMethod.GET)
+  @PostMapping(value = "/request")
   public ResponseEntity<String> generateUniqueId(@RequestBody SiteRequest siteRequest) {
-    JSONObject object = null;
+    JSONObject object;
     try {
       object = new JSONObject(siteRequest.toString());
       if (!object.get("siteUrl").toString().isEmpty()) {
@@ -40,7 +41,7 @@ public class SiteRequestController {
   }
 
   @RequestMapping(
-            value = "/**",
+            value = "/request",
             method = RequestMethod.OPTIONS
     )
   public ResponseEntity handle() {
