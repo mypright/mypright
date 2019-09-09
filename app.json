@@ -1,0 +1,10 @@
+{
+  "name": "MyPright",
+  "description": "MyPright backend app",
+  "repository": "https://gitlab.com/mypright/mypright",
+  "buildpacks": [
+    {
+      "url": "heroku/gradle"
+    }
+  ]
+}
