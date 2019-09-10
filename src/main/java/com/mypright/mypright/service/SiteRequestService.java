@@ -3,12 +3,6 @@ package com.mypright.mypright.service;
 import com.mypright.mypright.model.SiteRequest;
 import com.mypright.mypright.model.SiteRequestHook;
 import com.mypright.mypright.state.ApplicationState;
-
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.sun.jndi.toolkit.url.Uri;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import static org.json.XMLTokener.entity;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
