@@ -13,6 +13,8 @@ Even MyPright doesn't store your data.
 Your store your data in your private instance by deploying 
 it into your private cloud.
 
+![alt text](flow_diagram.png "Flow Diagram")
+
 In simple words, it is :
 #### Your private single sign-on and a private personal data vault.
 
