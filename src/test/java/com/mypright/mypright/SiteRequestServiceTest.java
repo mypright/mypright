@@ -1,9 +1,9 @@
-package com.mypright.mypright.service;
+package com.mypright.mypright;
 
 import com.mypright.mypright.model.SiteRequest;
 import com.mypright.mypright.model.SiteRequestHook;
+import com.mypright.mypright.service.SiteRequestService;
 import com.mypright.mypright.state.ApplicationState;
-import lombok.var;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -35,15 +35,13 @@ public class SiteRequestServiceTest {
     @Test
     public void testForCreateSiteRequestHook() {
         MockitoAnnotations.initMocks(this);
-        var result = siteRequestService.createSiteRequestHook(new SiteRequest(),"12345");
-        Assert.assertNotNull(result);
+        Assert.assertNotNull(siteRequestService.createSiteRequestHook(new SiteRequest(),"12345"));
     }
 
     @Test
     public void testForGetAllSiteRequestHooks() {
         MockitoAnnotations.initMocks(this);
-        var result = siteRequestService.getAllSiteRequestHooks();
-        Assert.assertNotNull(result);
+        Assert.assertNotNull(siteRequestService.getAllSiteRequestHooks());
     }
 
     @Ignore
@@ -57,8 +55,7 @@ public class SiteRequestServiceTest {
                 new HttpEntity<>(new LinkedMultiValueMap<String, String>(), new HttpHeaders()),
                 SiteRequestHook.class).getBody();
 
-        var result = siteRequestService.fetchPortalDetails("12345");
-        Assert.assertNotNull(result);
+        Assert.assertNotNull(siteRequestService.fetchPortalDetails("12345"));
 
     }
 }

@@ -1,11 +1,11 @@
-package com.mypright.mypright.controller;
+package com.mypright.mypright;
 
+import com.mypright.mypright.controller.SiteRequestController;
 import com.mypright.mypright.model.SiteRequest;
 import com.mypright.mypright.model.SiteRequestHook;
 import com.mypright.mypright.model.UserDetail;
 import com.mypright.mypright.service.SiteRequestService;
 import com.mypright.mypright.state.ApplicationState;
-import lombok.var;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,8 +45,7 @@ public class SiteControllerTest {
         when(siteRequestServiceMock.generateUniqueSiteID()).thenReturn(uniqueId);
         when(siteRequestServiceMock.createSiteRequestHook(siteRequest, uniqueId)).thenReturn(getSiteRequestHook());
 
-        var result = siteRequestController.generateUniqueId(siteRequest);
-        Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
+        Assert.assertEquals(siteRequestController.generateUniqueId(siteRequest).getStatusCode(), HttpStatus.OK);
 
     }
 
@@ -55,8 +54,9 @@ public class SiteControllerTest {
         MockitoAnnotations.initMocks(this);
 
         when(siteRequestServiceMock.fetchPortalDetails("12345")).thenReturn(getSiteRequestHook());
-        var result = siteRequestController.sendSiteRequestHook("12345");
-        Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
+        Assert.assertEquals(
+            siteRequestController.sendSiteRequestHook("12345").getStatusCode(),
+            HttpStatus.OK);
     }
 
     @Test
@@ -66,10 +66,8 @@ public class SiteControllerTest {
         List<SiteRequestHook> siteRequestHooks = new ArrayList<>();
         siteRequestHooks.add(getSiteRequestHook());
 
-        String uniqueId = "12345";
         when(siteRequestServiceMock.getAllSiteRequestHooks()).thenReturn(siteRequestHooks);
-        var result = siteRequestController.sendAllUserData();
-        Assert.assertEquals(result.getStatusCode(), HttpStatus.OK);
+        Assert.assertEquals(siteRequestController.sendAllUserData().getStatusCode(), HttpStatus.OK);
     }
 
     @Test
@@ -83,7 +81,7 @@ public class SiteControllerTest {
         when(applicationStateMock.getSiteRequestHooks()).thenReturn(siteRequestHooks);
         when(applicationStateMock.getUserDetails()).thenReturn(getUserDetails());
 
-        var result = siteRequestController.approveSite("{\n" +
+        HttpStatus result = siteRequestController.approveSite("{\n" +
                 "\"\": \"url\",\n" +
                 "\"userDetail\": [\n" +
                 "{\n" +
@@ -121,8 +119,9 @@ public class SiteControllerTest {
         when(applicationStateMock.getSiteRequestHooks()).thenReturn(siteRequestHooks);
         when(applicationStateMock.getUserDetails()).thenReturn(getUserDetails());
 
-        var result = siteRequestController.getUserDetailsFor("12345");
-        Assert.assertEquals(result.getStatusCode(), HttpStatus.NO_CONTENT);
+        Assert.assertEquals(
+            siteRequestController.getUserDetailsFor("12345").getStatusCode(),
+            HttpStatus.NO_CONTENT);
 
     }
 
