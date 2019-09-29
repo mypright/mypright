@@ -11,13 +11,13 @@ public class ApplicationState {
 
   private static ApplicationState INSTANCE = null;
 
-  private UserDetail userNameDetail = new UserDetail("name",null,"Mozilla");
+  private UserDetail userNameDetail = new UserDetail("1","name",null,"Mozilla");
 
-  private UserDetail userDobDetail = new UserDetail("dob",null,"September 23, 2002");
+  private UserDetail userDobDetail = new UserDetail("2","dob",null,"September 23, 2002");
 
-  private UserDetail userAadharDetail = new UserDetail("aadhar",null,"000000000000");
+  private UserDetail userAadharDetail = new UserDetail("3","aadhar",null,"000000000000");
 
-  private UserDetail userPanDetail = new UserDetail("pan",null,"AFTJUKNHG");
+  private UserDetail userPanDetail = new UserDetail("4","pan",null,"AFTJUKNHG");
 
   public static ApplicationState getINSTANCE(){
     if(INSTANCE == null){
