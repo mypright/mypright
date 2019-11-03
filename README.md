@@ -4,6 +4,8 @@ Use MyPright to take the true ownership of your personal data.
 Refrain third party login services (you know who. Isshhh !! they are 
 tracking you !) who target you with your data.
 
+![alt text](why_mypright.png "Why?")
+
 With MyPright, you decide who should have access your data and until when. 
 Centralized control of all your data. 
 Grant/Revoke the access to any service when ever you want just with a click.
